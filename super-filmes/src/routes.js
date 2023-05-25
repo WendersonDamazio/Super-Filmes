@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import Home from './pages/Home'
 import Filmes from './pages/Filmes'
+import Erro from './pages/Erro'
 
 import Header from './componets/Header'
 
@@ -12,6 +13,8 @@ function RoutesApp(){
             <Routes>
                 <Route path='/' element={ <Home/> }/>
                 <Route path='/filmes/:id' element={ <Filmes/> }/>
+                
+                <Route path='*' element={ <Erro/> }/>
             </Routes>
         </BrowserRouter>
     )
