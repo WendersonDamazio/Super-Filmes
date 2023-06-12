@@ -25,6 +25,8 @@ function Filmes(){
             })
             .catch(() => {
                 console.log('Filme não encontrado!')
+                navigate("/", {replace: true});
+                return;
             })
         }
 
@@ -32,10 +34,27 @@ function Filmes(){
 
         return() => {
             console.log('COMPONENTE FOI DESMONTADO')
-            navigate('/', { replace: true });
-            return;
+            //navigate('/', { replace: true });
+            //return;
         }
-    }, [])
+    }, [navigate, id])
+
+    function salvarFilme(){
+       const minhalista = localStorage.getItem("@superfilmes");
+
+       let filmesSalvos = JSON.parse(minhalista) || [];
+
+       const hasFilme = filmesSalvos.some( (filmesSalvos) =>  filmesSalvos.id === filme.id)
+
+       if(hasFilme){
+        alert("Esse filme já esta na lista");
+        return;
+       }
+
+       filmesSalvos.push(filme);
+       localStorage.setItem("@superfilmes", JSON.stringify(filmesSalvos));
+
+    }
 
     if(loading){
         return(
@@ -56,9 +75,9 @@ function Filmes(){
             <strong>Avaliação: {filme.vote_average} /10</strong>
 
             <div className='area-buttons'>
-                <button>Salvar</button>
+                <button onClick={salvarFilme}>Salvar</button>
                 <button>
-                    <a href='#'>
+                    <a target='_blank' rel="external" href={`https://youtube.com/results?search_query=${filme.title} trailer`}>
                         Trailer
                     </a>
                 </button>
